@@ -6,7 +6,8 @@ const TEXT = "#1a1a1a";
 const MUTED = "#555555";
 const ACCENT = "#000000";
 
-// Dados provisórios da Sprint 1 (o gerador virá depois).
+// Dados PESSOAIS provisórios da Sprint 1 (o gerador virá depois).
+// Instagram e LinkedIn são URLs de demonstração, não perfis oficiais da BRACCI.
 const person = {
   name: "Norberto Jahn",
   role: "CEO",
@@ -17,13 +18,14 @@ const person = {
   email: "norberto@bracci.com.br",
   address: "Canela - RS",
   addressHref: "https://www.google.com/maps/search/?api=1&query=Canela+RS",
+  instagramHref: "https://www.instagram.com/exemplo/",
+  linkedinHref: "https://www.linkedin.com/in/exemplo/",
 };
 
+// Elementos institucionais fixos da BRACCI.
 const company = {
   site: "bracci.com.br",
   siteHref: "https://bracci.com.br",
-  instagramHref: "https://www.instagram.com/bracci/",
-  linkedinHref: "https://www.linkedin.com/company/bracci/",
   // Preview local; URL absoluta (hospedada) fica para quando houver CDN.
   logoSrc: "/bracci-logo.png",
 };
@@ -144,11 +146,11 @@ export function EmailSignature() {
               {company.site}
             </a>
             <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <a href={company.instagramHref} style={linkStyle}>
+            <a href={person.instagramHref} style={linkStyle}>
               Instagram
             </a>
             <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <a href={company.linkedinHref} style={linkStyle}>
+            <a href={person.linkedinHref} style={linkStyle}>
               LinkedIn
             </a>
           </td>
