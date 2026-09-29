@@ -25,11 +25,8 @@ function telHref(phone: string) {
   return `tel:${plus}${onlyDigits(phone)}`;
 }
 
-// Sem "+", assume número brasileiro (DDD + número) e acrescenta o DDI 55.
 function whatsappHref(whatsapp: string) {
-  const digits = onlyDigits(whatsapp);
-  const international = whatsapp.trim().startsWith("+") || digits.length > 11;
-  return `https://wa.me/${international ? digits : `55${digits}`}`;
+  return `https://wa.me/${onlyDigits(whatsapp)}`;
 }
 
 function instagramHref(instagram: string) {
@@ -39,8 +36,7 @@ function instagramHref(instagram: string) {
 }
 
 function linkedinHref(linkedin: string) {
-  const value = linkedin.trim();
-  return isUrl(value) ? value : `https://${value}`;
+  return linkedin.trim();
 }
 
 // Elementos institucionais fixos da BRACCI.
