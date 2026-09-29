@@ -8,8 +8,6 @@ defmodule BracciServer.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      BracciServerWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:bracci_server, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: BracciServer.PubSub},
       # Start a worker by calling: BracciServer.Worker.start_link(arg)
       # {BracciServer.Worker, arg},

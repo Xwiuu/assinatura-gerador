@@ -17,8 +17,6 @@ defmodule BracciServerWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
-
   def router do
     quote do
       use Phoenix.Router, helpers: false
@@ -49,8 +47,7 @@ defmodule BracciServerWeb do
     quote do
       use Phoenix.VerifiedRoutes,
         endpoint: BracciServerWeb.Endpoint,
-        router: BracciServerWeb.Router,
-        statics: BracciServerWeb.static_paths()
+        router: BracciServerWeb.Router
     end
   end
 
