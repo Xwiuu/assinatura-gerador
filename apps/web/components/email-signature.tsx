@@ -6,21 +6,42 @@ const TEXT = "#1a1a1a";
 const MUTED = "#555555";
 const ACCENT = "#000000";
 
-// Dados PESSOAIS provisórios da Sprint 1 (o gerador virá depois).
-// Instagram e LinkedIn são URLs de demonstração, não perfis oficiais da BRACCI.
-const person = {
-  name: "Norberto Jahn",
-  role: "CEO",
-  phone: "(54) 0000-0000",
-  phoneHref: "tel:+555400000000",
-  whatsapp: "(54) 99999-9999",
-  whatsappHref: "https://wa.me/5554999999999",
-  email: "norberto@bracci.com.br",
-  address: "Canela - RS",
-  addressHref: "https://www.google.com/maps/search/?api=1&query=Canela+RS",
-  instagramHref: "https://www.instagram.com/exemplo/",
-  linkedinHref: "https://www.linkedin.com/in/exemplo/",
+export type SignatureData = {
+  name: string;
+  role: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  address: string;
+  instagram: string; // URL completa ou @identificador
+  linkedin: string; // URL completa
 };
+
+const onlyDigits = (value: string) => value.replace(/\D/g, "");
+const isUrl = (value: string) => /^https?:\/\//i.test(value);
+
+function telHref(phone: string) {
+  const plus = phone.trim().startsWith("+") ? "+" : "";
+  return `tel:${plus}${onlyDigits(phone)}`;
+}
+
+// Sem "+", assume número brasileiro (DDD + número) e acrescenta o DDI 55.
+function whatsappHref(whatsapp: string) {
+  const digits = onlyDigits(whatsapp);
+  const international = whatsapp.trim().startsWith("+") || digits.length > 11;
+  return `https://wa.me/${international ? digits : `55${digits}`}`;
+}
+
+function instagramHref(instagram: string) {
+  const value = instagram.trim();
+  if (isUrl(value)) return value;
+  return `https://www.instagram.com/${value.replace(/^@/, "")}/`;
+}
+
+function linkedinHref(linkedin: string) {
+  const value = linkedin.trim();
+  return isUrl(value) ? value : `https://${value}`;
+}
 
 // Elementos institucionais fixos da BRACCI.
 const company = {
@@ -44,7 +65,7 @@ function Label({ children }: { children: string }) {
   );
 }
 
-export function EmailSignature() {
+export function EmailSignature({ data }: { data: SignatureData }) {
   return (
     <table
       cellPadding={0}
@@ -65,7 +86,7 @@ export function EmailSignature() {
               paddingBottom: "2px",
             }}
           >
-            {person.name}
+            {data.name}
           </td>
         </tr>
         <tr>
@@ -79,7 +100,7 @@ export function EmailSignature() {
               borderBottom: `2px solid ${ACCENT}`,
             }}
           >
-            {person.role}
+            {data.role}
           </td>
         </tr>
         <tr>
@@ -95,29 +116,29 @@ export function EmailSignature() {
                 <tr>
                   <td style={rowStyle}>
                     <Label>Tel</Label>
-                    <a href={person.phoneHref} style={linkStyle}>
-                      {person.phone}
+                    <a href={telHref(data.phone)} style={linkStyle}>
+                      {data.phone}
                     </a>
                     <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                     <Label>WhatsApp</Label>
-                    <a href={person.whatsappHref} style={linkStyle}>
-                      {person.whatsapp}
+                    <a href={whatsappHref(data.whatsapp)} style={linkStyle}>
+                      {data.whatsapp}
                     </a>
                   </td>
                 </tr>
                 <tr>
                   <td style={rowStyle}>
                     <Label>E-mail</Label>
-                    <a href={`mailto:${person.email}`} style={linkStyle}>
-                      {person.email}
+                    <a href={`mailto:${data.email.trim()}`} style={linkStyle}>
+                      {data.email}
                     </a>
                   </td>
                 </tr>
                 <tr>
                   <td style={rowStyle}>
                     <Label>Endereço</Label>
-                    <a href={person.addressHref} style={linkStyle}>
-                      {person.address}
+                    <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`} style={linkStyle}>
+                      {data.address}
                     </a>
                   </td>
                 </tr>
@@ -146,11 +167,11 @@ export function EmailSignature() {
               {company.site}
             </a>
             <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <a href={person.instagramHref} style={linkStyle}>
+            <a href={instagramHref(data.instagram)} style={linkStyle}>
               Instagram
             </a>
             <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <a href={person.linkedinHref} style={linkStyle}>
+            <a href={linkedinHref(data.linkedin)} style={linkStyle}>
               LinkedIn
             </a>
           </td>

@@ -2,3 +2,40 @@ body {
   margin: 2rem;
   font-family: system-ui, sans-serif;
 }
+
+/* UI do gerador (fora da assinatura). */
+.generator {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.generator-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.generator-form label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.generator-form input {
+  padding: 0.5rem;
+  font: inherit;
+}
+
+.generator-preview {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  padding: 24px;
+  overflow-x: auto;
+}
+
+@media (max-width: 800px) {
+  .generator {
+    grid-template-columns: 1fr;
+  }
+}
