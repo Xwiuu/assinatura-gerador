@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { EmailSignature, type SignatureData } from "@/components/email-signature";
+import { useRef, useState } from "react";
+import {
+  EmailSignature,
+  signatureText,
+  type SignatureData,
+} from "@/components/email-signature";
 
 // Valores iniciais de exemplo, só para a tela não abrir vazia.
 const exampleData: SignatureData = {
@@ -28,6 +32,38 @@ const fields: { key: keyof SignatureData; label: string; type: string }[] = [
 
 export default function Home() {
   const [data, setData] = useState<SignatureData>(exampleData);
+  const [feedback, setFeedback] = useState("");
+  // Só o container da assinatura: o innerHTML não inclui form nem wrapper.
+  const signatureRef = useRef<HTMLDivElement>(null);
+  const feedbackTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  async function copy(successMessage: string, action: () => Promise<void>) {
+    let message = successMessage;
+    try {
+      await action();
+    } catch (error) {
+      console.error(error);
+      message = "Não foi possível copiar";
+    }
+    setFeedback(message);
+    clearTimeout(feedbackTimer.current);
+    feedbackTimer.current = setTimeout(() => setFeedback(""), 3000);
+  }
+
+  const signatureHtml = () => signatureRef.current?.innerHTML ?? "";
+
+  const copySignature = () =>
+    copy("Assinatura copiada", () =>
+      navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([signatureHtml()], { type: "text/html" }),
+          "text/plain": new Blob([signatureText(data)], { type: "text/plain" }),
+        }),
+      ]),
+    );
+
+  const copyHtml = () =>
+    copy("HTML copiado", () => navigator.clipboard.writeText(signatureHtml()));
 
   return (
     <main>
@@ -45,8 +81,19 @@ export default function Home() {
             </label>
           ))}
         </form>
-        <div className="generator-preview">
-          <EmailSignature data={data} />
+        <div>
+          <div className="generator-preview" ref={signatureRef}>
+            <EmailSignature data={data} />
+          </div>
+          <div className="generator-actions">
+            <button type="button" onClick={copySignature}>
+              Copiar assinatura
+            </button>
+            <button type="button" onClick={copyHtml}>
+              Copiar HTML
+            </button>
+            <span role="status">{feedback}</span>
+          </div>
         </div>
       </div>
     </main>

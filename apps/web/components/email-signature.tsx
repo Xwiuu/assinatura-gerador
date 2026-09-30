@@ -43,8 +43,11 @@ function linkedinHref(linkedin: string) {
 const company = {
   site: "bracci.com.br",
   siteHref: "https://bracci.com.br",
-  // Preview local; URL absoluta (hospedada) fica para quando houver CDN.
-  logoSrc: "/bracci-logo.png",
+  // URL ABSOLUTA: e-mail não resolve caminhos relativos. PENDÊNCIA: URL
+  // provisória (raw do GitHub, fixada no commit que adicionou a logo); trocar
+  // pela URL definitiva do site/CDN da BRACCI quando existir.
+  logoSrc:
+    "https://raw.githubusercontent.com/Xwiuu/assinatura-gerador/10badaba77552bbaed8026d7a86cf541d2f5d56e/apps/web/public/bracci-logo.png",
 };
 
 const linkStyle = { color: TEXT, textDecoration: "none" } as const;
@@ -57,8 +60,22 @@ const rowStyle = {
 
 function Label({ children }: { children: string }) {
   return (
-    <span style={{ color: MUTED, fontWeight: "bold" }}>{children}&nbsp;</span>
+    <span style={{ color: MUTED, fontWeight: "bold" }}>{`${children}\u00a0`}</span>
   );
+}
+
+export function signatureText(data: SignatureData) {
+  return [
+    data.name,
+    data.role,
+    `Telefone: ${data.phone}`,
+    `WhatsApp: ${data.whatsapp}`,
+    `E-mail: ${data.email}`,
+    `Endereço: ${data.address}`,
+    company.site,
+    `Instagram: ${data.instagram}`,
+    `LinkedIn: ${data.linkedin}`,
+  ].join("\n");
 }
 
 export function EmailSignature({ data }: { data: SignatureData }) {

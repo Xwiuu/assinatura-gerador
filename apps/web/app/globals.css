@@ -39,3 +39,16 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.generator-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.generator-actions button {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
