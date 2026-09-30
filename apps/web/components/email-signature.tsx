@@ -124,20 +124,19 @@ export function EmailSignature({ data }: { data: SignatureData }) {
       style={{
         borderCollapse: "collapse",
         width: "418px",
-        height: "118px",
+        minHeight: "118px",
         maxWidth: "100%",
         backgroundColor: "transparent",
       }}
     >
       <tbody>
-        <tr style={{ height: "118px" }}>
+        <tr>
           {/* BLOCO DE CONTEÚDO PRINCIPAL (ESQUERDA + DIREITA) */}
           <td
             style={{
               backgroundColor: BG_COLOR,
-              padding: "16px 0 14px 18px",
+              padding: "14px 0 12px 18px",
               verticalAlign: "top",
-              height: "118px",
               boxSizing: "border-box",
             }}
           >
@@ -191,9 +190,9 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                     {(hasContact || hasAddress) && (
                       <div
                         style={{
-                          height: "10px",
-                          lineHeight: "10px",
-                          fontSize: "10px",
+                          height: "8px",
+                          lineHeight: "8px",
+                          fontSize: "8px",
                         }}
                       >
                         &nbsp;
@@ -486,7 +485,6 @@ export function EmailSignature({ data }: { data: SignatureData }) {
             width={42}
             style={{
               width: "42px",
-              height: "118px",
               verticalAlign: "top",
               lineHeight: 0,
               padding: 0,
@@ -494,21 +492,24 @@ export function EmailSignature({ data }: { data: SignatureData }) {
               fontSize: 0,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={company.waveSrc}
-              alt=""
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 42 118"
+              preserveAspectRatio="none"
               width={42}
-              height={118}
+              height="100%"
               style={{
                 display: "block",
-                border: 0,
                 width: "42px",
-                height: "118px",
-                minHeight: "118px",
-                maxHeight: "118px",
+                height: "100%",
+                minHeight: "100%",
               }}
-            />
+            >
+              <path
+                d="M 0 0 L 10.00 0 L 30.56 1.00 L 31.70 2.00 L 31.93 3.00 L 31.98 4.00 L 32.63 5.00 L 32.82 6.00 L 32.95 7.00 L 33.56 8.00 L 33.93 9.00 L 34.50 10.00 L 34.71 11.00 L 34.95 12.00 L 35.74 13.00 L 35.90 14.00 L 36.51 15.00 L 36.93 16.00 L 37.51 17.00 L 37.75 18.00 L 37.98 19.00 L 38.67 20.00 L 38.85 21.00 L 38.97 22.00 L 39.54 23.00 L 39.91 24.00 L 39.94 25.00 L 39.96 26.00 L 40.57 27.00 L 40.58 28.00 L 40.60 29.00 L 40.62 30.00 L 40.62 31.00 L 40.60 32.00 L 40.58 33.00 L 40.51 34.00 L 39.96 35.00 L 39.94 36.00 L 39.89 37.00 L 39.55 38.00 L 39.00 39.00 L 38.89 40.00 L 38.78 41.00 L 38.51 42.00 L 37.96 43.00 L 37.69 44.00 L 37.50 45.00 L 36.96 46.00 L 36.65 47.00 L 35.97 48.00 L 35.83 49.00 L 35.53 50.00 L 34.89 51.00 L 34.62 52.00 L 33.95 53.00 L 33.86 54.00 L 32.98 55.00 L 32.88 56.00 L 32.73 57.00 L 32.00 58.00 L 31.81 59.00 L 31.57 60.00 L 30.98 61.00 L 30.87 62.00 L 29.96 63.00 L 29.91 64.00 L 29.82 65.00 L 29.58 66.00 L 28.95 67.00 L 28.75 68.00 L 28.56 69.00 L 27.95 70.00 L 27.89 71.00 L 27.00 72.00 L 26.97 73.00 L 26.86 74.00 L 26.79 75.00 L 26.65 76.00 L 25.98 77.00 L 25.99 78.00 L 25.99 79.00 L 25.99 80.00 L 26.00 81.00 L 26.52 82.00 L 26.75 83.00 L 26.88 84.00 L 26.99 85.00 L 27.89 86.00 L 28.59 87.00 L 28.93 88.00 L 29.77 89.00 L 29.94 90.00 L 30.58 91.00 L 30.92 92.00 L 30.96 93.00 L 30.98 94.00 L 31.49 95.00 L 31.56 96.00 L 31.56 97.00 L 31.57 98.00 L 31.56 99.00 L 31.50 100.00 L 31.47 101.00 L 30.98 102.00 L 30.98 103.00 L 30.96 104.00 L 30.97 105.00 L 30.97 106.00 L 30.97 107.00 L 30.96 108.00 L 30.97 109.00 L 30.96 110.00 L 30.97 111.00 L 31.56 112.00 L 31.64 113.00 L 31.88 114.00 L 31.95 115.00 L 10.00 116.00 L 10.00 117.00 L 0 118 Z"
+                fill={BG_COLOR}
+              />
+            </svg>
           </td>
         </tr>
       </tbody>
