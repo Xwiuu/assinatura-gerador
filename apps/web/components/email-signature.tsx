@@ -222,8 +222,70 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                       style={{ borderCollapse: "collapse" }}
                     >
                       <tbody>
-                        {/* Linha Contato (WhatsApp com preferência, ou Telefone) */}
-                        {contact && (
+                        {/* Linha WhatsApp */}
+                        {hasWhatsapp && (
+                          <tr>
+                            <td
+                              style={{
+                                paddingBottom: (hasPhone || hasAddress) ? "2px" : "0px",
+                                verticalAlign: "middle",
+                              }}
+                            >
+                              <table
+                                cellPadding={0}
+                                cellSpacing={0}
+                                border={0}
+                                role="presentation"
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td
+                                      style={{
+                                        verticalAlign: "middle",
+                                        paddingRight: "5px",
+                                        lineHeight: 0,
+                                      }}
+                                    >
+                                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                                      <img
+                                        src={icons.whatsapp}
+                                        alt=""
+                                        width={12}
+                                        height={12}
+                                        style={{
+                                          display: "block",
+                                          border: 0,
+                                        }}
+                                      />
+                                    </td>
+                                    <td
+                                      style={{
+                                        fontFamily: FONT,
+                                        fontSize: "10px",
+                                        lineHeight: "14px",
+                                        color: TEXT,
+                                        verticalAlign: "middle",
+                                      }}
+                                    >
+                                      <a
+                                        href={whatsappHref(data.whatsapp)}
+                                        style={{
+                                          color: TEXT,
+                                          textDecoration: "none",
+                                        }}
+                                      >
+                                        {data.whatsapp.trim()}
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        )}
+
+                        {/* Linha Telefone */}
+                        {hasPhone && (
                           <tr>
                             <td
                               style={{
@@ -248,7 +310,7 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                                     >
                                       {/* eslint-disable-next-line @next/next/no-img-element */}
                                       <img
-                                        src={contact.icon}
+                                        src={icons.phone}
                                         alt=""
                                         width={12}
                                         height={12}
@@ -268,13 +330,13 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                                       }}
                                     >
                                       <a
-                                        href={contact.href}
+                                        href={telHref(data.phone)}
                                         style={{
                                           color: TEXT,
                                           textDecoration: "none",
                                         }}
                                       >
-                                        {contact.display}
+                                        {data.phone.trim()}
                                       </a>
                                     </td>
                                   </tr>

@@ -25,29 +25,49 @@ const fields: {
   type: string;
   required?: boolean;
   placeholder?: string;
+  hint?: string;
 }[] = [
   { key: "name", label: "Nome", type: "text", required: true },
   { key: "role", label: "Cargo", type: "text", required: true },
-  { key: "phone", label: "Telefone", type: "tel" },
   {
     key: "whatsapp",
-    label: "WhatsApp (com DDI)",
+    label: "WhatsApp",
     type: "tel",
-    placeholder: "+55 54 99999-9999",
+    placeholder: "(54) 0000.0000",
   },
-  { key: "email", label: "E-mail", type: "email", required: true },
-  { key: "address", label: "Endereço", type: "text" },
+  {
+    key: "phone",
+    label: "Telefone fixo",
+    type: "tel",
+    placeholder: "(54) 0000-0000",
+  },
+  {
+    key: "email",
+    label: "E-mail",
+    type: "email",
+    required: true,
+    hint: "Usado na validação e texto puro (oculto no card conforme layout aprovado).",
+  },
+  {
+    key: "address",
+    label: "Endereço",
+    type: "text",
+    placeholder: "Canela - RS",
+    hint: "Define a rota no Google Maps para o botão 'Veja nossos endereços'.",
+  },
   {
     key: "instagram",
-    label: "Instagram (@usuário ou URL)",
+    label: "Instagram",
     type: "text",
-    placeholder: "@usuario",
+    placeholder: "@usuario ou https://...",
+    hint: "Define o link do ícone do Instagram.",
   },
   {
     key: "linkedin",
-    label: "LinkedIn (URL completa)",
+    label: "LinkedIn",
     type: "text",
     placeholder: "https://www.linkedin.com/in/usuario",
+    hint: "Define o link do ícone do LinkedIn.",
   },
 ];
 
@@ -117,10 +137,12 @@ export default function Home() {
             ref={formRef}
             onSubmit={(e) => e.preventDefault()}
           >
-            {fields.map(({ key, label, type, required, placeholder }) => (
+            {fields.map(({ key, label, type, required, placeholder, hint }) => (
               <label key={key} htmlFor={key}>
-                {label}
-                {required ? " *" : ""}
+                <span>
+                  {label}
+                  {required ? " *" : ""}
+                </span>
                 <input
                   id={key}
                   name={key}
@@ -130,6 +152,7 @@ export default function Home() {
                   value={data[key]}
                   onChange={(e) => setData({ ...data, [key]: e.target.value })}
                 />
+                {hint && <span className="hint">{hint}</span>}
               </label>
             ))}
             <p className="hint">* Obrigatório para copiar.</p>
