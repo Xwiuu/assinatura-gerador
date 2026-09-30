@@ -12,7 +12,7 @@ const exampleData: SignatureData = {
   name: "Norberto Jahn",
   role: "CEO",
   phone: "(54) 0000-0000",
-  whatsapp: "(54) 99999-9999",
+  whatsapp: "+55 54 99999-9999",
   email: "norberto@bracci.com.br",
   address: "Canela - RS",
   instagram: "https://www.instagram.com/exemplo/",
@@ -24,15 +24,31 @@ const fields: {
   label: string;
   type: string;
   required?: boolean;
+  placeholder?: string;
 }[] = [
   { key: "name", label: "Nome", type: "text", required: true },
   { key: "role", label: "Cargo", type: "text", required: true },
   { key: "phone", label: "Telefone", type: "tel" },
-  { key: "whatsapp", label: "WhatsApp", type: "tel" },
+  {
+    key: "whatsapp",
+    label: "WhatsApp (com DDI)",
+    type: "tel",
+    placeholder: "+55 54 99999-9999",
+  },
   { key: "email", label: "E-mail", type: "email", required: true },
   { key: "address", label: "Endereço", type: "text" },
-  { key: "instagram", label: "Instagram (URL ou @usuário)", type: "text" },
-  { key: "linkedin", label: "LinkedIn (URL)", type: "text" },
+  {
+    key: "instagram",
+    label: "Instagram (@usuário ou URL)",
+    type: "text",
+    placeholder: "@usuario",
+  },
+  {
+    key: "linkedin",
+    label: "LinkedIn (URL completa)",
+    type: "text",
+    placeholder: "https://www.linkedin.com/in/usuario",
+  },
 ];
 
 export default function Home() {
@@ -101,7 +117,7 @@ export default function Home() {
             ref={formRef}
             onSubmit={(e) => e.preventDefault()}
           >
-            {fields.map(({ key, label, type, required }) => (
+            {fields.map(({ key, label, type, required, placeholder }) => (
               <label key={key} htmlFor={key}>
                 {label}
                 {required ? " *" : ""}
@@ -110,6 +126,7 @@ export default function Home() {
                   name={key}
                   type={type}
                   required={required}
+                  placeholder={placeholder}
                   value={data[key]}
                   onChange={(e) => setData({ ...data, [key]: e.target.value })}
                 />
