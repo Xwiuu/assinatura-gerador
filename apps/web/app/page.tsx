@@ -19,12 +19,17 @@ const exampleData: SignatureData = {
   linkedin: "https://www.linkedin.com/in/exemplo/",
 };
 
-const fields: { key: keyof SignatureData; label: string; type: string }[] = [
-  { key: "name", label: "Nome", type: "text" },
-  { key: "role", label: "Cargo", type: "text" },
+const fields: {
+  key: keyof SignatureData;
+  label: string;
+  type: string;
+  required?: boolean;
+}[] = [
+  { key: "name", label: "Nome", type: "text", required: true },
+  { key: "role", label: "Cargo", type: "text", required: true },
   { key: "phone", label: "Telefone", type: "tel" },
   { key: "whatsapp", label: "WhatsApp", type: "tel" },
-  { key: "email", label: "E-mail", type: "email" },
+  { key: "email", label: "E-mail", type: "email", required: true },
   { key: "address", label: "Endereço", type: "text" },
   { key: "instagram", label: "Instagram (URL ou @usuário)", type: "text" },
   { key: "linkedin", label: "LinkedIn (URL)", type: "text" },
@@ -35,19 +40,35 @@ export default function Home() {
   const [feedback, setFeedback] = useState("");
   // Só o container da assinatura: o innerHTML não inclui form nem wrapper.
   const signatureRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const feedbackTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  async function copy(successMessage: string, action: () => Promise<void>) {
-    let message = successMessage;
-    try {
-      await action();
-    } catch (error) {
-      console.error(error);
-      message = "Não foi possível copiar";
-    }
+  function showFeedback(message: string) {
     setFeedback(message);
     clearTimeout(feedbackTimer.current);
     feedbackTimer.current = setTimeout(() => setFeedback(""), 3000);
+  }
+
+  // Bloqueia só a cópia: nome, cargo e e-mail obrigatórios; e-mail com formato básico.
+  function validationError() {
+    const missing = fields
+      .filter(({ key, required }) => required && data[key].trim() === "")
+      .map(({ label }) => label.toLowerCase());
+    if (missing.length > 0) return `Preencha ${missing.join(", ")}`;
+    if (!formRef.current?.checkValidity()) return "Informe um e-mail válido";
+    return null;
+  }
+
+  async function copy(successMessage: string, action: () => Promise<void>) {
+    const error = validationError();
+    if (error) return showFeedback(error);
+    try {
+      await action();
+      showFeedback(successMessage);
+    } catch (error) {
+      console.error(error);
+      showFeedback("Não foi possível copiar");
+    }
   }
 
   const signatureHtml = () => signatureRef.current?.innerHTML ?? "";
@@ -66,22 +87,39 @@ export default function Home() {
     copy("HTML copiado", () => navigator.clipboard.writeText(signatureHtml()));
 
   return (
-    <main>
-      <h1>BRACCI Signature Generator</h1>
+    <main className="page">
+      <header>
+        <p className="eyebrow">BRACCI</p>
+        <h1>Gerador de assinatura de e-mail</h1>
+        <p>Preencha seus dados e copie a assinatura pronta.</p>
+      </header>
       <div className="generator">
-        <form className="generator-form">
-          {fields.map(({ key, label, type }) => (
-            <label key={key}>
-              {label}
-              <input
-                type={type}
-                value={data[key]}
-                onChange={(e) => setData({ ...data, [key]: e.target.value })}
-              />
-            </label>
-          ))}
-        </form>
-        <div>
+        <section aria-labelledby="dados-titulo">
+          <h2 id="dados-titulo">Dados</h2>
+          <form
+            className="generator-form"
+            ref={formRef}
+            onSubmit={(e) => e.preventDefault()}
+          >
+            {fields.map(({ key, label, type, required }) => (
+              <label key={key} htmlFor={key}>
+                {label}
+                {required ? " *" : ""}
+                <input
+                  id={key}
+                  name={key}
+                  type={type}
+                  required={required}
+                  value={data[key]}
+                  onChange={(e) => setData({ ...data, [key]: e.target.value })}
+                />
+              </label>
+            ))}
+            <p className="hint">* Obrigatório para copiar.</p>
+          </form>
+        </section>
+        <section aria-labelledby="previa-titulo">
+          <h2 id="previa-titulo">Prévia</h2>
           <div className="generator-preview" ref={signatureRef}>
             <EmailSignature data={data} />
           </div>
@@ -94,7 +132,7 @@ export default function Home() {
             </button>
             <span role="status">{feedback}</span>
           </div>
-        </div>
+        </section>
       </div>
     </main>
   );

@@ -2,11 +2,11 @@
 
 ## 1. Objetivo atual do produto
 
-Gerador web interno de assinaturas de e-mail da BRACCI. Estado atual: apenas a fundação técnica (Sprint 0); o gerador ainda não existe.
+Gerador web interno de assinaturas de e-mail da BRACCI. Estado atual: o gerador existe e roda inteiramente no navegador (formulário, prévia e cópia da assinatura).
 
 ## 2. Responsabilidade do Next.js (`apps/web`)
 
-Toda a interface e a lógica do gerador de assinaturas.
+Toda a interface e a lógica do gerador de assinaturas, incluindo a geração do HTML da assinatura e a cópia para o clipboard.
 
 ## 3. Responsabilidade potencial do Phoenix (`apps/server`)
 

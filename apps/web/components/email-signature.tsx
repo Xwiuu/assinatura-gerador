@@ -18,6 +18,7 @@ export type SignatureData = {
 };
 
 const onlyDigits = (value: string) => value.replace(/\D/g, "");
+const hasValue = (value: string) => value.trim() !== "";
 const isUrl = (value: string) => /^https?:\/\//i.test(value);
 
 function telHref(phone: string) {
@@ -64,18 +65,26 @@ function Label({ children }: { children: string }) {
   );
 }
 
+function Separator() {
+  return <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>;
+}
+
 export function signatureText(data: SignatureData) {
+  const optional = (label: string, value: string) =>
+    hasValue(value) ? `${label}: ${value.trim()}` : null;
   return [
     data.name,
     data.role,
-    `Telefone: ${data.phone}`,
-    `WhatsApp: ${data.whatsapp}`,
+    optional("Telefone", data.phone),
+    optional("WhatsApp", data.whatsapp),
     `E-mail: ${data.email}`,
-    `Endereço: ${data.address}`,
+    optional("Endereço", data.address),
     company.site,
-    `Instagram: ${data.instagram}`,
-    `LinkedIn: ${data.linkedin}`,
-  ].join("\n");
+    optional("Instagram", data.instagram),
+    optional("LinkedIn", data.linkedin),
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
 }
 
 export function EmailSignature({ data }: { data: SignatureData }) {
@@ -126,19 +135,31 @@ export function EmailSignature({ data }: { data: SignatureData }) {
               style={{ borderCollapse: "collapse" }}
             >
               <tbody>
-                <tr>
-                  <td style={rowStyle}>
-                    <Label>Tel</Label>
-                    <a href={telHref(data.phone)} style={linkStyle}>
-                      {data.phone}
-                    </a>
-                    <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                    <Label>WhatsApp</Label>
-                    <a href={whatsappHref(data.whatsapp)} style={linkStyle}>
-                      {data.whatsapp}
-                    </a>
-                  </td>
-                </tr>
+                {(hasValue(data.phone) || hasValue(data.whatsapp)) && (
+                  <tr>
+                    <td style={rowStyle}>
+                      {hasValue(data.phone) && (
+                        <>
+                          <Label>Tel</Label>
+                          <a href={telHref(data.phone)} style={linkStyle}>
+                            {data.phone}
+                          </a>
+                        </>
+                      )}
+                      {hasValue(data.phone) && hasValue(data.whatsapp) && (
+                        <Separator />
+                      )}
+                      {hasValue(data.whatsapp) && (
+                        <>
+                          <Label>WhatsApp</Label>
+                          <a href={whatsappHref(data.whatsapp)} style={linkStyle}>
+                            {data.whatsapp}
+                          </a>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <td style={rowStyle}>
                     <Label>E-mail</Label>
@@ -147,14 +168,19 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                     </a>
                   </td>
                 </tr>
-                <tr>
-                  <td style={rowStyle}>
-                    <Label>Endereço</Label>
-                    <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`} style={linkStyle}>
-                      {data.address}
-                    </a>
-                  </td>
-                </tr>
+                {hasValue(data.address) && (
+                  <tr>
+                    <td style={rowStyle}>
+                      <Label>Endereço</Label>
+                      <a
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address.trim())}`}
+                        style={linkStyle}
+                      >
+                        {data.address}
+                      </a>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </td>
@@ -179,14 +205,22 @@ export function EmailSignature({ data }: { data: SignatureData }) {
             <a href={company.siteHref} style={{ ...linkStyle, fontWeight: "bold" }}>
               {company.site}
             </a>
-            <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <a href={instagramHref(data.instagram)} style={linkStyle}>
-              Instagram
-            </a>
-            <span style={{ color: MUTED }}>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <a href={linkedinHref(data.linkedin)} style={linkStyle}>
-              LinkedIn
-            </a>
+            {hasValue(data.instagram) && (
+              <>
+                <Separator />
+                <a href={instagramHref(data.instagram)} style={linkStyle}>
+                  Instagram
+                </a>
+              </>
+            )}
+            {hasValue(data.linkedin) && (
+              <>
+                <Separator />
+                <a href={linkedinHref(data.linkedin)} style={linkStyle}>
+                  LinkedIn
+                </a>
+              </>
+            )}
           </td>
         </tr>
       </tbody>
