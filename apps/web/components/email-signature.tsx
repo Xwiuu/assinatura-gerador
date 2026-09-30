@@ -4,7 +4,6 @@
 const FONT = "Arial, Helvetica, sans-serif";
 const TEXT = "#000000";
 const MUTED = "#1a1a1a";
-const BG_COLOR = "#d9cab1";
 
 export type SignatureData = {
   name: string;
@@ -39,6 +38,13 @@ function instagramHref(instagram: string) {
 function linkedinHref(linkedin: string) {
   return linkedin.trim();
 }
+
+// Fundo bege unificado com o recorte orgânico lateral direito.
+const fullBgSvg =
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 418 118" preserveAspectRatio="none" width="100%" height="100%"><path d="M 0 0 L 408.55 0 L 408.83 1.00 L 409.22 2.00 L 409.51 3.00 L 409.85 4.00 L 410.16 5.00 L 410.47 6.00 L 410.85 7.00 L 411.23 8.00 L 411.64 9.00 L 412.02 10.00 L 412.40 11.00 L 412.84 12.00 L 413.26 13.00 L 413.70 14.00 L 414.12 15.00 L 414.54 16.00 L 414.95 17.00 L 415.32 18.00 L 415.70 19.00 L 416.06 20.00 L 416.36 21.00 L 416.66 22.00 L 416.97 23.00 L 417.24 24.00 L 417.47 25.00 L 417.69 26.00 L 417.85 27.00 L 417.95 28.00 L 417.99 29.00 L 418.00 30.00 L 417.99 31.00 L 417.94 32.00 L 417.86 33.00 L 417.72 34.00 L 417.52 35.00 L 417.33 36.00 L 417.12 37.00 L 416.86 38.00 L 416.55 39.00 L 416.32 40.00 L 416.09 41.00 L 415.80 42.00 L 415.44 43.00 L 415.11 44.00 L 414.78 45.00 L 414.39 46.00 L 414.02 47.00 L 413.60 48.00 L 413.25 49.00 L 412.89 50.00 L 412.48 51.00 L 412.09 52.00 L 411.69 53.00 L 411.29 54.00 L 410.90 55.00 L 410.50 56.00 L 410.13 57.00 L 409.74 58.00 L 409.36 59.00 L 409.03 60.00 L 408.69 61.00 L 408.34 62.00 L 408.00 63.00 L 407.66 64.00 L 407.34 65.00 L 407.05 66.00 L 406.73 67.00 L 406.38 68.00 L 406.08 69.00 L 405.78 70.00 L 405.45 71.00 L 405.11 72.00 L 404.76 73.00 L 404.47 74.00 L 404.28 75.00 L 404.13 76.00 L 403.94 77.00 L 403.69 78.00 L 403.46 79.00 L 403.35 80.00 L 403.37 81.00 L 403.51 82.00 L 403.79 83.00 L 404.07 84.00 L 404.36 85.00 L 404.74 86.00 L 405.21 87.00 L 405.77 88.00 L 406.30 89.00 L 406.84 90.00 L 407.30 91.00 L 407.71 92.00 L 408.02 93.00 L 408.24 94.00 L 408.43 95.00 L 408.62 96.00 L 408.79 97.00 L 408.88 98.00 L 408.92 99.00 L 408.91 100.00 L 408.86 101.00 L 408.76 102.00 L 408.63 103.00 L 408.48 104.00 L 408.36 105.00 L 408.29 106.00 L 408.26 107.00 L 408.25 108.00 L 408.25 109.00 L 408.26 110.00 L 408.33 111.00 L 408.47 112.00 L 408.68 113.00 L 408.89 114.00 L 409.08 115.00 L 409.31 116.00 L 409.39 117.00 L 409.39 118 L 0 118 Z" fill="#d9cab1"/></svg>`
+  );
 
 // Elementos institucionais fixos da BRACCI.
 // PENDÊNCIA: Facebook, YouTube e Pinterest utilizam links "#" temporariamente
@@ -126,7 +132,10 @@ export function EmailSignature({ data }: { data: SignatureData }) {
         width: "418px",
         minHeight: "118px",
         maxWidth: "100%",
-        backgroundColor: "transparent",
+        backgroundImage: `url('${fullBgSvg}')`,
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "left top",
       }}
     >
       <tbody>
@@ -134,8 +143,7 @@ export function EmailSignature({ data }: { data: SignatureData }) {
           {/* BLOCO DE CONTEÚDO PRINCIPAL (ESQUERDA + DIREITA) */}
           <td
             style={{
-              backgroundColor: BG_COLOR,
-              padding: "14px 0 12px 18px",
+              padding: "14px 20px 12px 18px",
               verticalAlign: "top",
               boxSizing: "border-box",
             }}
@@ -398,7 +406,7 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                       verticalAlign: "top",
                       textAlign: "center",
                       width: "125px",
-                      paddingRight: "2px",
+                      paddingRight: "12px",
                       paddingTop: "14px",
                     }}
                   >
@@ -478,38 +486,6 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                 </tr>
               </tbody>
             </table>
-          </td>
-
-          {/* COLUNA DA FATIA LATERAL DIREITA: RECORTE ORGÂNICO */}
-          <td
-            width={42}
-            style={{
-              width: "42px",
-              verticalAlign: "top",
-              lineHeight: 0,
-              padding: 0,
-              margin: 0,
-              fontSize: 0,
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 42 118"
-              preserveAspectRatio="none"
-              width={42}
-              height="100%"
-              style={{
-                display: "block",
-                width: "42px",
-                height: "100%",
-                minHeight: "100%",
-              }}
-            >
-              <path
-                d="M 0 0 L 32.55 0 L 32.83 1.00 L 33.22 2.00 L 33.51 3.00 L 33.85 4.00 L 34.16 5.00 L 34.47 6.00 L 34.85 7.00 L 35.23 8.00 L 35.64 9.00 L 36.02 10.00 L 36.40 11.00 L 36.84 12.00 L 37.26 13.00 L 37.70 14.00 L 38.12 15.00 L 38.54 16.00 L 38.95 17.00 L 39.32 18.00 L 39.70 19.00 L 40.06 20.00 L 40.36 21.00 L 40.66 22.00 L 40.97 23.00 L 41.24 24.00 L 41.47 25.00 L 41.69 26.00 L 41.85 27.00 L 41.95 28.00 L 41.99 29.00 L 42.00 30.00 L 41.99 31.00 L 41.94 32.00 L 41.86 33.00 L 41.72 34.00 L 41.52 35.00 L 41.33 36.00 L 41.12 37.00 L 40.86 38.00 L 40.55 39.00 L 40.32 40.00 L 40.09 41.00 L 39.80 42.00 L 39.44 43.00 L 39.11 44.00 L 38.78 45.00 L 38.39 46.00 L 38.02 47.00 L 37.60 48.00 L 37.25 49.00 L 36.89 50.00 L 36.48 51.00 L 36.09 52.00 L 35.69 53.00 L 35.29 54.00 L 34.90 55.00 L 34.50 56.00 L 34.13 57.00 L 33.74 58.00 L 33.36 59.00 L 33.03 60.00 L 32.69 61.00 L 32.34 62.00 L 32.00 63.00 L 31.66 64.00 L 31.34 65.00 L 31.05 66.00 L 30.73 67.00 L 30.38 68.00 L 30.08 69.00 L 29.78 70.00 L 29.45 71.00 L 29.11 72.00 L 28.76 73.00 L 28.47 74.00 L 28.28 75.00 L 28.13 76.00 L 27.94 77.00 L 27.69 78.00 L 27.46 79.00 L 27.35 80.00 L 27.37 81.00 L 27.51 82.00 L 27.79 83.00 L 28.07 84.00 L 28.36 85.00 L 28.74 86.00 L 28.21 87.00 L 29.77 88.00 L 30.30 89.00 L 30.84 90.00 L 31.30 91.00 L 31.71 92.00 L 32.02 93.00 L 32.24 94.00 L 32.43 95.00 L 32.62 96.00 L 32.79 97.00 L 32.88 98.00 L 32.92 99.00 L 32.91 100.00 L 32.86 101.00 L 32.76 102.00 L 32.63 103.00 L 32.48 104.00 L 32.36 105.00 L 32.29 106.00 L 32.26 107.00 L 32.25 108.00 L 32.25 109.00 L 32.26 110.00 L 32.33 111.00 L 32.47 112.00 L 32.68 113.00 L 32.89 114.00 L 33.08 115.00 L 33.31 116.00 L 33.39 117.00 L 33.39 118 L 0 118 Z"
-                fill={BG_COLOR}
-              />
-            </svg>
           </td>
         </tr>
       </tbody>
