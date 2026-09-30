@@ -12,7 +12,7 @@ const exampleData: SignatureData = {
   name: "Norberto Jahn",
   role: "CEO",
   phone: "(54) 0000-0000",
-  whatsapp: "+55 54 99999-9999",
+  whatsapp: "(54) 0000.0000",
   email: "norberto@bracci.com.br",
   address: "Canela - RS",
   instagram: "https://www.instagram.com/exemplo/",
