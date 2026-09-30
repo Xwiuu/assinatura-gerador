@@ -4,6 +4,7 @@
 const FONT = "Arial, Helvetica, sans-serif";
 const TEXT = "#000000";
 const MUTED = "#1a1a1a";
+const BG_COLOR = "#d9cab1";
 
 export type SignatureData = {
   name: string;
@@ -50,8 +51,8 @@ const company = {
   pinterestHref: "#",
   // Logo sólida preta conforme layout aprovado pela diretoria.
   logoSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAAAUCAYAAAC+sgIEAAADzklEQVR4nL2aW4hOURTHf59LcikeKIpijNwijZA7UW7lFlJuSS7l+sIo9/LiQQllXF/wRCSJJHfy4DYxJskYSYNSPIzcZj4v69Sx7HPOPnvv8a9d39l7rf9eZ6+919lr768AnAf6kA/NgAagFqgEbgOXlUx34AzQFijk4C4CdcBT4DpwKadtGqXAFqAlsAt45cgzFBgLDAdKgFYWOgXgHrAsoX0xMAQYBHS0tOOT2AFwH+ggv+8ggxeivFSdjgnE+87yJZPwOcblOjGuer6DxjxPvv7C808/oZxZBBpjBo8KzO2C8QaepFViwqwmsL0yAN9/cWYRWNJEznyW05H9PCdGmn6e8jzG+TwQZ4mNM9/nHLCuBsId0qadOT0n9ypHJ0TYlzIY5Rb6Jr0DOW2Io9zA9xMY4MGZ6szXDoQDFcduqdfOHOfAvV9xlFrqjbaY3SNT9Fcb5Kc52B+H5jvsyWfi9HZmL8WxTepDOLOn4lhuqdeg9I4DF1XdkxT9OiU7x8H2ODYovnpPvgjBnblMccyQ+hDO1PZttJAvSwnPun6qRZ95w7sJNYqvXwBOtJ0tUgTfAO1TcsSCtMdxGrgQyFAMYbXGQueRep4d+70COBJ7vmSRA7tMcA2dk74IwGmEaWXq0GlTKhVviJW5V3H0zpC/oORNG7pqJbMrY0x8Nj0RPsT4fgXgi2AVZl2cqUOSrzPn5Ax33SzlhxvkBqcMUmhnhgjbEazC7Cv5aLfJCLOdgPWqvhzYk2LAQ8Pg2eBQRnu1ej6WIFcHVEjqE+EU0DdBfiawNoedJvz21LeG7waoJGFFJK1Ml9V+M8OGuTk2PUllaYqOL+4qvkkBOLENs96kAZ250qH/KIV54PiJqFD1ExzHJULaDtsHVmG2KRCF63FAZ0P4bi6nNvr2oF0G70n1/AQ4Kkn+sJw2ngQWAefUJLoGTAGu5OSL8FjCe5dY3RVgsiNfInxW5ijDjcL3WJvLBqjWMIu3JshO9JzxQwz6Q6XtpaHtrBzeu2C2ge+7pEs9HTlTw2yIEiX2PrvZegPvNoPcNyVz2mFAdiqO+MlQqDGJsDkQX2mCfUEd+SVmuG9qYlqh22PtCz1XZRyaZ43U9wU+BnQmGRcAtqXJr8B0ajDC05nIxbTuZ5PhzLYo3zpXrMtwwImAzkS+lY0efNFx4F/1BeBWSo6VhR/yd5G9hn8alMr3tC3wVS56qxz6qJJ8FjlAr5f+NgOt5UVq5DDABwclxYn+EjMMeKtkxki/ZSKXhSJwA5if0N5Ddt4L5F1s8EFuqpBjwWjDeOMPsISV/LBQaVcAAAAASUVORK5CYII=",
-  // Fundo unificado com recorte orgânico na lateral direita.
-  bgSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaIAAAB2CAYAAACK05fiAAADhUlEQVR4nO3du4oUQRSA4VkvIEaipgZq0ImueKFVfIh+1n4HFW1ERBFsUUEERTFQEQx0d41WxnEu1UNVHYPvi2aqTsFmP8v2du2MQ38wA4D8dpu2e7Zp6EidnwUAlhMiAEp5mjIkRACEEiIAihmH/tKmGSECoCQPKwDwfxMiAIoah/7iun0hAqC0V+s2hQiA4sahP7dqT4gAqOH0qg0hAqCGJ6s2hAiAKsahv75sXYgAqOXRskUhAqCacegvLK4JEQA1vV5cECIAqlp8lFuIAKjtr0e5hQiA2v56lFuIAKhuHPrLh5+FCIAIf25vFSIAQgkRACHGoW9mQgRAoNMzIQIg0P2ZEAEQaRz680IEQKSTQgRApONCBECkHSECINIJIQIg0p4QARDpiBABEMlvRACE+iFEAETaFyIAIh0VIgAifRMiAMI0bfdWiACIcmfm7dsABPo8EyIAojRt93ImRABEEyIAItw6/CBEAFTXtN3Dw89CBEAoIQKgtt35L0IEQFVN2z2b/y5EANR0e3FBiACo6dPighABUE3Tdm8W14QIgFpuLlsUIgCqaNpuWLYuRADUcGPVhhABUMP3VRtCBEBxTduNq/aECIDSrq3bFCIASvu4blOIACiqabv36/aFCICSLm0aECIAimna7vmmGSECoJRbCTNCBEAxX1KGhAiAItb979A8IQKghH/uHVpFiADIrmm7B6mzQgRAbnemDAsRALntTBkWIgBy+zBlWIgAyGrZdeDrCBEAOe1OPSBEAOT0c+oBIQIgm6btXkw9I0QA5NJuc0iIAMjl6zaHhAiALJq2e7nNOSECIJQQAZDDpNf6zBMiAHLY2/agEAGQw1YPKsyECIBM9rc9KEQAhBIiAHKYdPXDPCECIIdT2x4UIgBySL4afJEQARBKiADIYhx6Lz0FINTDceibqYeECICczkw9IEQA5HRvHPqrUw4IEQC5PZ4yLEQAZDflb0VCBEAJZ1MHhQiAEu6mDgoRAEWMQ38hZU6IACjlZMqQEAFQyvGUISECoJRfKUNCBEAoIQIglBABUMqxlCEhAiCUEAFQys+UISECoJSDlCEhAqCUvZQhIQKglP2UISECoJQfKUNCBEARTdu9S5kTIgBCCREAoYQIgCLcRwRANPcRARDKfUQAhPLSUwBCDSlDQgRAKCECoJhx6K9smhEiAEraeBWEEAEQ6jds2mo86l2oRAAAAABJRU5ErkJggg==",
+  // Fatia da onda orgânica lateral direita.
+  waveSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAB2CAYAAAC+jwHXAAAFQklEQVR4nNWc308cVRTHP3dmYWWhYIUYarSyEKwmrSwUm/ij+gql7WPjk76p0Qf/Gfukbz752Kb8iPpgTDSCdgXRRKgLlkr9QVvpgtKyOzM+cMcuy+7OHTRzD9+EMOzc2f1w7r1n7pxz7qqFmUsBBnrqufPq3z/CK1RFg0avVb9OAIECfAIUSu06WVMpE0iAxa8vX9SHHuDWODZR2L6s/415YKZ/+Nx8FKwxKPBmjLZRcgAfmAQWgyCItGoc0DiWM32/54HmIIgefc7//OGmCoAS0AF0FvLjx6NgbYEqoEn/HgMOE2FUW6CVygEZz/MaNpIA2gN0Lc1O9DXqftugLtAOnASOSAZFu6nXgfZyuVy3kQRQB2gFTv08NzVQz6oSQAHSwDDQ4fu1J5UUUIBXgO5CfuJkrZOSQFuAN4C2Wq5KEqgLPKPvVL3VJyWBol3VINDt+/6uE9JA24B3gJZqVyUNFCADvFztqiSCusDpHVf1oPslgirgJaCrkB8/EVpVIqiruV4FOiSDenphnQPaQ58qEdTVP08Ah5dnJ48FQSASNFQaeBZ4BKEWRU8oBbwGtPqBJxY0VAtwqHB1IisdtAnIAhnpoBngSaBJOig6SKKkg3oa9CHpoADNgHcQQH3AkQ7q6hiVeIv6GnTrIICuA7500G1gBXClg5aAW0BROugGUOwbOntdOuhHwJbjKLGrp/Cp7jvd9WJBHeAGsJEdGFlUSq5FAVaBdcfdScZIBv0U+DvMP8XJMyUlD7gPfJnNjU47+i4v0aKBtmbRdR/k4CSCekAeKFamHSWC+sB0Njc6Lxm0DFwC1lOp3dNHIuhl4I/qbLM00AJws29obKn6hCTQe8CVnXu7Q3W+SYIf9bXB1oDPsrnRmVpFBhIsGpruE2At5TbVbCQB1NHrzq+ATZTsFOPvwHLf0NhCvdoSCaAe8B5w22nw9G4b1ANuAtd6ciPfNqrUsQ0KsABsppzakyiUbVAX+AC4HRWus+lHy8D3wK3ewTM/RDW2Xff0OfCX4ziRlWQ2655cYBpYNykitAVaBn4BbjTynZWyBVoC3gdKjXxnpWyBFvWS7lcTa2IR9DdgtXfwzHXTC2yAbgNfAKryKTNKNkDvAR/H6XYsgV4FNmo9bjRS0qAlHaFbi2NNLIBu6QJsY7cUKmnQIrDSN3j2x7gXJgUall9c3Aklxut2EgR1dYRuBbgbd3yScNevAsXswOjifi5OEvQOsOHsM2OUJOg1oLSfbidB0LJee3rSQRWwDNzd7xsk2fWqIn8UW0mCGu2bqqck/WimevtVHCVp0RPAw8Ce2KeJkgR9EThUXbtsqiRBs0CL73lGe+yqlSTo48DTy3NTp/wgvlWTXD05wLtA90/fXDkW9w2SnPUKeBQYATo9z4s1qZJeOKeAC0BvIT8+GOfCpEED7aLeAtq8cuPta5VKGtTRw+A4cHRpdsJ4rNqKlLQCLwBdpuPUZtjxAtBkegOwBepqqzYX8uO90nfausBRvViJlM2uD4AjuuA6UjazIo7eDFB/j2VV4wMhm6BBnM+3CRqGeYxyXbYtum7a2PZkuq9jpkaNbSkF/AkEkvNM6Gf8O3qsRsomaEmXaBjd7G13PT0DI0ZhSNsOf9v0edQ2qLFsTyZj2faj6eW5qT1b1Os1tqWyXjxnJC+cqdikKn49mtagKekWVUAXkDYJ8dp2T6eBdL2v/KhUnLqnzf+EtFdNQCfw2NLs5ED/8Pm5RmuTOKBvV/SAX+M49Ismx5VaAUpR36JlDNo/fO5D07ZGUgr0JFJKEUQM1H8A17xs/jHTKbUAAAAASUVORK5CYII=",
 };
 
 // Ícones vetorizados com círculo de contorno fino conforme aprovado.
@@ -138,20 +139,19 @@ export function EmailSignature({ data }: { data: SignatureData }) {
         width: "418px",
         height: "118px",
         maxWidth: "100%",
-        backgroundImage: `url(${company.bgSrc})`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "left top",
-        backgroundSize: "418px 118px",
         backgroundColor: "transparent",
       }}
     >
       <tbody>
-        <tr>
+        <tr style={{ height: "118px" }}>
           {/* BLOCO DE CONTEÚDO PRINCIPAL (ESQUERDA + DIREITA) */}
           <td
             style={{
-              padding: "16px 36px 14px 18px",
+              backgroundColor: BG_COLOR,
+              padding: "16px 0 14px 18px",
               verticalAlign: "top",
+              height: "118px",
+              boxSizing: "border-box",
             }}
           >
             <table
@@ -350,7 +350,7 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                       verticalAlign: "top",
                       textAlign: "center",
                       width: "125px",
-                      paddingRight: "0px",
+                      paddingRight: "2px",
                       paddingTop: "14px",
                     }}
                   >
@@ -430,6 +430,36 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                 </tr>
               </tbody>
             </table>
+          </td>
+
+          {/* COLUNA DA FATIA LATERAL DIREITA: RECORTE ORGÂNICO */}
+          <td
+            width={42}
+            style={{
+              width: "42px",
+              height: "118px",
+              verticalAlign: "top",
+              lineHeight: 0,
+              padding: 0,
+              margin: 0,
+              fontSize: 0,
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={company.waveSrc}
+              alt=""
+              width={42}
+              height={118}
+              style={{
+                display: "block",
+                border: 0,
+                width: "42px",
+                height: "118px",
+                minHeight: "118px",
+                maxHeight: "118px",
+              }}
+            />
           </td>
         </tr>
       </tbody>
