@@ -99,19 +99,6 @@ export function EmailSignature({ data }: { data: SignatureData }) {
   const hasContact = hasWhatsapp || hasPhone;
   const hasAddress = hasValue(data.address);
 
-  const contact = hasWhatsapp
-    ? {
-        display: data.whatsapp.trim(),
-        href: whatsappHref(data.whatsapp),
-        icon: icons.whatsapp,
-      }
-    : hasPhone
-      ? {
-          display: data.phone.trim(),
-          href: telHref(data.phone),
-          icon: icons.phone,
-        }
-      : null;
 
   const instagramLink = hasValue(data.instagram)
     ? instagramHref(data.instagram)
