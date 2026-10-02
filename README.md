@@ -40,10 +40,33 @@ Site e logo da BRACCI são fixos e não editáveis.
 
 A cópia usa `navigator.clipboard`, que só funciona em **HTTPS** ou em **`localhost`**. Em HTTP comum, os botões mostram "Não foi possível copiar".
 
-## Pendências para produção
+## Produção (Vercel)
 
-- **Imagens (logo, ícones, curva):** a assinatura usa URLs absolutas para os PNGs de `apps/web/public/` (o Gmail descarta imagens em base64). A base é `NEXT_PUBLIC_ASSET_BASE_URL`, se definida (ex.: `https://gerador.exemplo.com.br`, sem barra final, definida no build); senão, a origem onde o gerador está aberto. A cópia é bloqueada se essa base não for HTTPS pública (ex.: `localhost`), pois as imagens quebrariam no destinatário. Em produção/homologação, defina a variável com a URL HTTPS pública do gerador.
-- **Compatibilidade:** a assinatura foi testada em navegador, mas **ainda precisa de homologação real** em Gmail web, Outlook web e Outlook desktop (incluindo modo escuro).
+- **URL estável:** `https://web-ten-kohl-45.vercel.app`. É o domínio de produção do projeto `web` na Vercel: não muda entre deploys e sempre serve o último deploy de produção (branch `main`, Root Directory `apps/web`). Não use URLs de preview/deploy (`web-xxxxxxx-xwiuus-projects.vercel.app`), que mudam a cada deploy e exigem login.
+- **Iframe no portal:** precisa da permissão de clipboard, senão "Copiar assinatura" falha dentro do iframe:
+
+  ```html
+  <iframe
+    src="https://web-ten-kohl-45.vercel.app"
+    allow="clipboard-write"
+  ></iframe>
+  ```
+
+## Imagens da assinatura
+
+A assinatura usa URLs absolutas para os PNGs de `apps/web/public/` (o Gmail descarta imagens em base64). A base é `NEXT_PUBLIC_ASSET_BASE_URL` (definida no build; hoje `https://web-ten-kohl-45.vercel.app` em Production e Preview na Vercel); sem ela, a origem onde o gerador está aberto. A cópia é bloqueada se essa base não for HTTPS pública (ex.: `localhost`), pois as imagens quebrariam no destinatário.
+
+**As assinaturas já geradas carregam as imagens desta URL a cada abertura do e-mail.** Não remova, renomeie nem mova estes arquivos sem uma estratégia de compatibilidade (manter os caminhos antigos servindo):
+
+- `https://web-ten-kohl-45.vercel.app/bracci-logo.png`
+- `https://web-ten-kohl-45.vercel.app/wave-edge.png`
+- `https://web-ten-kohl-45.vercel.app/icons/{instagram,facebook,linkedin,youtube,pinterest,whatsapp,phone,pin}.png`
+
+Alterar o conteúdo de um desses PNGs muda a aparência de todas as assinaturas já enviadas (respeitado o cache do proxy do Gmail).
+
+## Pendências
+
+- **Compatibilidade:** homologado no Gmail web (envio e recebimento). Ainda falta validar Outlook web e Outlook desktop (incluindo modo escuro).
 
 ## Validação
 
