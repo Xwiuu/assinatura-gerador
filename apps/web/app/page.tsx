@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import {
   EmailSignature,
   signatureText,
@@ -76,6 +76,13 @@ export default function Home() {
   const [feedback, setFeedback] = useState("");
   // Só o container da assinatura: o innerHTML não inclui form nem wrapper.
   const signatureRef = useRef<HTMLDivElement>(null);
+  // Imagens da assinatura apontam para a origem pública do gerador (ou para
+  // NEXT_PUBLIC_ASSET_BASE_URL, se definida): e-mail exige URL absoluta.
+  const assetBaseUrl = useSyncExternalStore(
+    () => () => {},
+    () => process.env.NEXT_PUBLIC_ASSET_BASE_URL || window.location.origin,
+    () => process.env.NEXT_PUBLIC_ASSET_BASE_URL || "",
+  );
   const formRef = useRef<HTMLFormElement>(null);
   const feedbackTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -161,7 +168,7 @@ export default function Home() {
         <section aria-labelledby="previa-titulo">
           <h2 id="previa-titulo">Prévia</h2>
           <div className="generator-preview" ref={signatureRef}>
-            <EmailSignature data={data} />
+            <EmailSignature data={data} assetBaseUrl={assetBaseUrl} />
           </div>
           <div className="generator-actions">
             <button type="button" onClick={copySignature}>
