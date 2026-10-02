@@ -39,12 +39,9 @@ function linkedinHref(linkedin: string) {
   return linkedin.trim();
 }
 
-// Fundo bege unificado com o recorte orgânico lateral direito.
-const fullBgSvg =
-  "data:image/svg+xml;utf8," +
-  encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 418 118" preserveAspectRatio="none" width="100%" height="100%"><path d="M 0 0 L 408.55 0 L 408.83 1.00 L 409.22 2.00 L 409.51 3.00 L 409.85 4.00 L 410.16 5.00 L 410.47 6.00 L 410.85 7.00 L 411.23 8.00 L 411.64 9.00 L 412.02 10.00 L 412.40 11.00 L 412.84 12.00 L 413.26 13.00 L 413.70 14.00 L 414.12 15.00 L 414.54 16.00 L 414.95 17.00 L 415.32 18.00 L 415.70 19.00 L 416.06 20.00 L 416.36 21.00 L 416.66 22.00 L 416.97 23.00 L 417.24 24.00 L 417.47 25.00 L 417.69 26.00 L 417.85 27.00 L 417.95 28.00 L 417.99 29.00 L 418.00 30.00 L 417.99 31.00 L 417.94 32.00 L 417.86 33.00 L 417.72 34.00 L 417.52 35.00 L 417.33 36.00 L 417.12 37.00 L 416.86 38.00 L 416.55 39.00 L 416.32 40.00 L 416.09 41.00 L 415.80 42.00 L 415.44 43.00 L 415.11 44.00 L 414.78 45.00 L 414.39 46.00 L 414.02 47.00 L 413.60 48.00 L 413.25 49.00 L 412.89 50.00 L 412.48 51.00 L 412.09 52.00 L 411.69 53.00 L 411.29 54.00 L 410.90 55.00 L 410.50 56.00 L 410.13 57.00 L 409.74 58.00 L 409.36 59.00 L 409.03 60.00 L 408.69 61.00 L 408.34 62.00 L 408.00 63.00 L 407.66 64.00 L 407.34 65.00 L 407.05 66.00 L 406.73 67.00 L 406.38 68.00 L 406.08 69.00 L 405.78 70.00 L 405.45 71.00 L 405.11 72.00 L 404.76 73.00 L 404.47 74.00 L 404.28 75.00 L 404.13 76.00 L 403.94 77.00 L 403.69 78.00 L 403.46 79.00 L 403.35 80.00 L 403.37 81.00 L 403.51 82.00 L 403.79 83.00 L 404.07 84.00 L 404.36 85.00 L 404.74 86.00 L 405.21 87.00 L 405.77 88.00 L 406.30 89.00 L 406.84 90.00 L 407.30 91.00 L 407.71 92.00 L 408.02 93.00 L 408.24 94.00 L 408.43 95.00 L 408.62 96.00 L 408.79 97.00 L 408.88 98.00 L 408.92 99.00 L 408.91 100.00 L 408.86 101.00 L 408.76 102.00 L 408.63 103.00 L 408.48 104.00 L 408.36 105.00 L 408.29 106.00 L 408.26 107.00 L 408.25 108.00 L 408.25 109.00 L 408.26 110.00 L 408.33 111.00 L 408.47 112.00 L 408.68 113.00 L 408.89 114.00 L 409.08 115.00 L 409.31 116.00 L 409.39 117.00 L 409.39 118 L 0 118 Z" fill="#d9cab1"/></svg>`
-  );
+const BEIGE = "#d9cab1";
+// bgcolor (atributo legado) não está nos tipos do React; Gmail/Outlook o respeitam.
+const BG_ATTR = { bgcolor: BEIGE } as Record<string, string>;
 
 // Elementos institucionais oficiais da BRACCI.
 const company = {
@@ -125,25 +122,25 @@ export function EmailSignature({ data }: { data: SignatureData }) {
       cellSpacing={0}
       border={0}
       role="presentation"
+      width={418}
       style={{
         borderCollapse: "collapse",
         width: "418px",
-        minHeight: "118px",
-        maxWidth: "100%",
-        backgroundImage: `url('${fullBgSvg}')`,
-        backgroundSize: "100% 100%",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "left top",
       }}
     >
       <tbody>
         <tr>
           {/* BLOCO DE CONTEÚDO PRINCIPAL (ESQUERDA + DIREITA) */}
           <td
+            {...BG_ATTR}
+            width={376}
+            height={92}
             style={{
-              padding: "14px 20px 12px 18px",
+              width: "376px",
+              height: "92px",
+              backgroundColor: BEIGE,
+              padding: "14px 8px 12px 18px",
               verticalAlign: "top",
-              boxSizing: "border-box",
             }}
           >
             <table
@@ -151,9 +148,11 @@ export function EmailSignature({ data }: { data: SignatureData }) {
               cellSpacing={0}
               border={0}
               role="presentation"
+              {...BG_ATTR}
               style={{
                 borderCollapse: "collapse",
                 width: "100%",
+                backgroundColor: BEIGE,
               }}
             >
               <tbody>
@@ -484,6 +483,21 @@ export function EmailSignature({ data }: { data: SignatureData }) {
                 </tr>
               </tbody>
             </table>
+          </td>
+          {/* RECORTE DIREITO: PNG estático da curva (sem clip-path/CSS moderno) */}
+          <td
+            width={42}
+            height={118}
+            style={{ width: "42px", height: "118px", padding: 0, lineHeight: 0, verticalAlign: "top" }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={company.waveSrc}
+              alt=""
+              width={42}
+              height={118}
+              style={{ display: "block", border: 0 }}
+            />
           </td>
         </tr>
       </tbody>
