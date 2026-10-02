@@ -431,6 +431,8 @@ export function EmailSignature({
             width: `${WAVE_WIDTH}px`,
             height: `${HEIGHT}px`,
             padding: "0",
+            fontSize: "0",
+            lineHeight: "0",
             verticalAlign: "top",
           }}
         >
