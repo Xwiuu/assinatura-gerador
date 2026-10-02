@@ -71,13 +71,26 @@ const fields: {
   },
 ];
 
+// Destinatário só carrega imagens de HTTPS público; localhost quebra no envio.
+function isPublicAssetBase(base: string) {
+  try {
+    const { protocol, hostname } = new URL(base);
+    return (
+      protocol === "https:" &&
+      !["localhost", "127.0.0.1", "[::1]", "0.0.0.0"].includes(hostname)
+    );
+  } catch {
+    return false;
+  }
+}
+
 export default function Home() {
   const [data, setData] = useState<SignatureData>(exampleData);
   const [feedback, setFeedback] = useState("");
   // Só o container da assinatura: o innerHTML não inclui form nem wrapper.
   const signatureRef = useRef<HTMLDivElement>(null);
-  // Imagens da assinatura apontam para a origem pública do gerador (ou para
-  // NEXT_PUBLIC_ASSET_BASE_URL, se definida): e-mail exige URL absoluta.
+  // Imagens da assinatura apontam para NEXT_PUBLIC_ASSET_BASE_URL, se definida,
+  // ou para a origem do gerador: e-mail exige URL absoluta.
   const assetBaseUrl = useSyncExternalStore(
     () => () => {},
     () => process.env.NEXT_PUBLIC_ASSET_BASE_URL || window.location.origin,
@@ -99,6 +112,8 @@ export default function Home() {
       .map(({ label }) => label.toLowerCase());
     if (missing.length > 0) return `Preencha ${missing.join(", ")}`;
     if (!formRef.current?.checkValidity()) return "Informe um e-mail válido";
+    if (!isPublicAssetBase(assetBaseUrl))
+      return "Imagens apontariam para endereço local: copie pelo gerador publicado (HTTPS)";
     return null;
   }
 

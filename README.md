@@ -42,7 +42,7 @@ A cópia usa `navigator.clipboard`, que só funciona em **HTTPS** ou em **`local
 
 ## Pendências para produção
 
-- **Logo:** a assinatura usa uma URL absoluta (e-mail não resolve caminhos relativos). Hoje ela aponta para `raw.githubusercontent.com`, fixada no commit que adicionou o arquivo. **Isso é provisório**: depende do repositório continuar público e não é um host apropriado para produção. Antes do uso definitivo, substitua `company.logoSrc` em `apps/web/components/email-signature.tsx` por um asset público e estável controlado pela BRACCI.
+- **Imagens (logo, ícones, curva):** a assinatura usa URLs absolutas para os PNGs de `apps/web/public/` (o Gmail descarta imagens em base64). A base é `NEXT_PUBLIC_ASSET_BASE_URL`, se definida (ex.: `https://gerador.exemplo.com.br`, sem barra final, definida no build); senão, a origem onde o gerador está aberto. A cópia é bloqueada se essa base não for HTTPS pública (ex.: `localhost`), pois as imagens quebrariam no destinatário. Em produção/homologação, defina a variável com a URL HTTPS pública do gerador.
 - **Compatibilidade:** a assinatura foi testada em navegador, mas **ainda precisa de homologação real** em Gmail web, Outlook web e Outlook desktop (incluindo modo escuro).
 
 ## Validação
